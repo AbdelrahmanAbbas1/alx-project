@@ -1,6 +1,9 @@
+CREATE DATABASE quiz_app_db;
+USE quiz_app_db;
+
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) UNIQUE NOT NULL,
+    user_name VARCHAR(50) UNIQUE NOT NULL,
     user_email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp
@@ -53,16 +56,3 @@ CREATE TABLE results (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id)
 );
-
-INSERT INTO users (username, user_email, password_hash)
-VALUES ('abdo', 'abdelrahmanabbas@599@gmail.com', 'General12');
-
-INSERT INTO quizzes (title, created_by)
-VALUES ('test', 1);
-
-SELECT * FROM users;
-SELECT * FROM quizzes;
-SELECT * FROM questions;
-SELECT * FROM options;
-SELECT * FROM user_response;
-SELECT * FROM results;
