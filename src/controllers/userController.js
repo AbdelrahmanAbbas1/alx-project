@@ -1,4 +1,6 @@
 const pool = require('../../config/db');
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
 // Register a new user
 
@@ -10,9 +12,11 @@ exports.registerUser = async (req, res) => {
   }
 
   try {
+    // Authentication process
+    const hashed_password = await bcrypt.hash(password_hash, saltRounds);
     const [result] = await pool.query(
       'INSERT INTO users (user_name, user_email, password_hash) VALUES (?, ?, ?)',
-      [user_name, user_email, password_hash]
+      [user_name, user_email, hashed_password]
     );
     res.status(201).json({ message: "User registered successfully", userId: result.insertId })
   } catch (err) {
