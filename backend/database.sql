@@ -21,28 +21,33 @@ CREATE TABLE quizzes (
 CREATE TABLE questions (
 	question_id INT PRIMARY KEY AUTO_INCREMENT,
     question_text text NOT NULL,
+    option_1 text NOT NULL,
+    option_2 text NOT NULL,
+    option_3 text NOT NULL,
+    option_4 text NOT NULL,
+    correct_option INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     quiz_id INT,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id)
 );
 
-CREATE TABLE options (
-	option_id INT PRIMARY KEY AUTO_INCREMENT,
-    option_text text NOT NULL,
-    is_correct BOOLEAN,
-    question_id INT,
-    quiz_id INT,
-	FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id),
-    FOREIGN KEY (question_id) REFERENCES questions(question_id)
-);
+-- CREATE TABLE options (
+-- 	option_id INT PRIMARY KEY AUTO_INCREMENT,
+--     option_text text NOT NULL,
+--     is_correct BOOLEAN,
+--     question_id INT,
+--     quiz_id INT,
+-- 	FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id),
+--     FOREIGN KEY (question_id) REFERENCES questions(question_id)
+-- );
 
 CREATE TABLE user_response (
 	response_id INT PRIMARY KEY AUTO_INCREMENT,
     answered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    option_id INT,
+    selected_option INT,
     user_id INT,
     question_id INT,
-    FOREIGN KEY (option_id) REFERENCES options(option_id),
+    -- FOREIGN KEY (option_id) REFERENCES options(option_id),
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (question_id) REFERENCES questions(question_id)
 );
