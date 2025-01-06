@@ -4,6 +4,6 @@ const { createQuiz } = require('../controllers/quizController');
 const { verifyToken } = require('../middlewares/authMiddleware');
 // Register User
 
-router.post('/create', verifyToken, createQuiz);
+router.post('/create', createQuiz);
 
 module.exports = router;

@@ -38,7 +38,7 @@ exports.loginUser = async (req, res) => {
   const { user_email, password_hash } = req.body;
 
   if (!user_email || !password_hash) {
-    return res.status(400).json({ message: "All fields are required" });
+    res.status(400).json({ message: "All fields are required" });
   }
 
 
@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
     );
 
     if (rows.length === 0) {
-      res.status(401).json({ message: "Invalid Credentials" });
+      return res.status(401).json({ message: "Invalid Credentials" });
     }
 
     const user = rows[0];
@@ -58,7 +58,7 @@ exports.loginUser = async (req, res) => {
     // Verifying the password
     if (!isPasswordCorrect) {
       console.log('Invalid Password');
-      res.status(401).json({ message: "Invalid Credentials" });
+      return res.status(401).json({ message: "Invalid Credentials" });
     }
 
     // Generating a jwt token
