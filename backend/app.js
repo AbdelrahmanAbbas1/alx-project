@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const dotenv = require('dotenv');
 const userRouter = require('./src/routes/users');
+const quizRouter = require('./src/routes/quizzes')
 
 // Loading environment variables
 dotenv.config()
@@ -26,7 +27,11 @@ app.get('/', (req, res) => {
   res.send('API is working');
 });
 
+// Users route
 app.use('/api/users', userRouter);
+
+// Quizzes route
+app.use('/api/quizzes', quizRouter);
 
 const port = process.env.PORT || 5000;
 
