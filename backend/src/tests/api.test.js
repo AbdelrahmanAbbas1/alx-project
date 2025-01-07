@@ -5,30 +5,30 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// describe('API Endpoints', () => {
-//   let token;
-//   let userId;
-//   let quizId;
+describe('API Endpoints', () => {
+  let token;
+  let userId;
+  let quizId;
 
-//   beforeAll(async () => {
-//     // Register a user
-//     await request(app)
-//       .post('/api/users/register')
-//       .send({ user_name: 'testuser', user_email: 'testuser@example.com', password: 'password' });
+  beforeAll(async () => {
+    // Register a user
+    await request(app)
+      .post('/api/users/register')
+      .send({ user_name: 'testuser', user_email: 'testuser@example.com', password: 'password' });
 
-//     // Login the user to get a token
-//     const loginResponse = await request(app)
-//       .post('/api/users/login')
-//       .send({ user_email: 'testuser@example.com', password: 'password' });
+    // Login the user to get a token
+    const loginResponse = await request(app)
+      .post('/api/users/login')
+      .send({ user_email: 'testuser@example.com', password: 'password' });
 
-//     token = loginResponse.body.token;
-//     userId = loginResponse.body.userId;
-//   });
+    token = loginResponse.body.token;
+    userId = loginResponse.body.userId;
+  });
 
-//   afterAll(async () => {
-//     // Close the database connection pool
-//     await pool.end();
-//   });
+  afterAll(async () => {
+    // Close the database connection pool
+    await pool.end();
+  });
 
   it('should create a new quiz', async () => {
     const response = await request(app)
