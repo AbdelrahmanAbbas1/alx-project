@@ -1,7 +1,0 @@
-node.js
-mysql
-express
-sequelize
-dotenv
-body-parser
-cors

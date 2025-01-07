@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizzes - Quiz Web App</title>
+    <title>Quizzes</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -11,27 +11,14 @@
         <h1>Available Quizzes</h1>
     </header>
 
-    <section class="quizzes-container">
-        <div class="quiz">
-            <h3>Quiz 1: General Knowledge</h3>
-            <button>Take Quiz</button>
-        </div>
-
-        <div class="quiz">
-            <h3>Quiz 2: Science</h3>
-            <button>Take Quiz</button>
-        </div>
-
-        <div class="quiz">
-            <h3>Quiz 3: History</h3>
-            <button>Take Quiz</button>
-        </div>
+    <section class="quizzes-container" id="quizzesList">
+        <!-- Quizzes will be dynamically inserted here -->
     </section>
 
     <footer>
         <p>&copy; 2025 Quiz Web App</p>
     </footer>
 
-    <script type="module" src="js/app.js"></script>
+    <script src="js/quizzes.js"></script>
 </body>
 </html>

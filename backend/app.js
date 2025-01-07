@@ -5,10 +5,10 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const dotenv = require('dotenv');
 const userRouter = require('./src/routes/users');
-const quizRouter = require('./src/routes/quizzes')
+const quizRouter = require('./src/routes/quizzes');
 
 // Loading environment variables
-dotenv.config()
+dotenv.config();
 
 const app = express();
 
@@ -19,9 +19,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 
-
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
-
 
 app.get('/', (req, res) => {
   res.send('API is working');
@@ -35,4 +33,10 @@ app.use('/api/quizzes', quizRouter);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+// Conditionally start the server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => console.log(`Server is running on port ${port}`));
+}
+
+module.exports = app; // Export the app for testing
