@@ -14,6 +14,15 @@ exports.registerUser = async (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
+  const [existingUser] = await pool.query(
+    'SELECT * FROM users WHERE user_email = ?',
+    [user_email]
+  );
+
+  if (existingUser.length > 0) {
+    return res.status(409).json({ error: "User already exists" });
+  }
+
   try {
     // Authentication process
     const hashed_password = await bcrypt.hash(password_hash, saltRounds);
