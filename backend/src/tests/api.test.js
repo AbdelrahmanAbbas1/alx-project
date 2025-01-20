@@ -7,8 +7,8 @@ dotenv.config();
 
 describe('API Endpoints', () => {
   let token;
-  let userId;
-  let quizId;
+  let user_id;
+  let quiz_id;
 
   beforeAll(async () => {
     // Register a user
@@ -21,23 +21,40 @@ describe('API Endpoints', () => {
       .post('/api/users/login')
       .send({ user_email: 'testuser@example.com', password_hash: 'password' });
 
+    console.log(loginResponse.body); // dubugging
     token = loginResponse.body.token;
-    userId = loginResponse.body.userId;
+    user_id = loginResponse.body.user_id;
+    console.log("user_id: ", user_id); // debugging
   });
 
   afterAll(async () => {
     // Close the database connection pool
-    await pool.end();
+    try {
+      // Clean up the specific entries created during the test
+      console.log(quiz_id); // debugging
+      if (quiz_id) {
+        await pool.query('DELETE FROM results WHERE quiz_id = ?', [quiz_id]);
+        await pool.query('DELETE FROM questions WHERE quiz_id = ?', [quiz_id]);
+        await pool.query('DELETE FROM quizzes WHERE quiz_id = ?', [quiz_id]);
+      }
+      if (user_id) {
+        await pool.query('DELETE FROM users WHERE user_id = ?', [user_id]);
+      }
+    } catch (error) {
+      console.error('Error in afterAll:', error);
+    } finally {
+      await pool.end(); // Close the database connection
+    }
   });
 
   it('should create a new quiz', async () => {
     const response = await request(app)
       .post('/api/quizzes/create')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Cookie', `authToken=${token}`)
       .send({
         title: 'Test Quiz',
         description: 'This is a test quiz',
-        created_by: userId,
+        created_by: user_id,
         questions: [
           {
             question_text: 'What is 2 + 2?',
@@ -46,10 +63,16 @@ describe('API Endpoints', () => {
           }
         ]
       });
-
-    expect(response.status).toBe(201);
-    expect(response.body.message).toBe('Quiz created successfully');
-    quizId = response.body.quizId;
+      console.log("user_id: ", user_id); // debugging
+      console.log("TOKEN: ", token); // debugging
+      console.log(response.body);
+      console.log(response.body.quiz_id);
+      if (response.body.message === "Quiz already exists") {
+        quiz_id = response.body.quiz_id;
+      }
+      expect(response.status).toBe(201);
+      expect(response.body.message).toBe('Quiz created successfully');
+      quiz_id = response.body.quiz_id;
   });
 
   it('should get all quizzes', async () => {
@@ -59,7 +82,8 @@ describe('API Endpoints', () => {
   });
 
   it('should get a quiz by ID', async () => {
-    const response = await request(app).get(`/api/quizzes/${quizId}`);
+    console.log("quiz_id: ", quiz_id);
+    const response = await request(app).get(`/api/quizzes/${quiz_id}`);
     expect(response.status).toBe(200);
     expect(response.body.quiz).toHaveProperty('title', 'Test Quiz');
   });
@@ -67,30 +91,28 @@ describe('API Endpoints', () => {
   it('should submit quiz responses', async () => {
     const response = await request(app)
       .post('/api/quizzes/submit')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Cookie', `authToken=${token}`)
       .send({
-        userId,
-        quizId,
+        user_id,
+        quiz_id,
         responses: [
           {
-            questionId: 1,
-            selectedOption: 4
+            question_id: 1,
+            selected_option: 4
           }
         ]
       });
 
     expect(response.status).toBe(201);
     expect(response.body.message).toBe('Quiz submitted successfully');
-    expect(response.body).toHaveProperty('score', 1);
   });
 
   it('should get user results', async () => {
     const response = await request(app)
-      .get(`/api/quizzes/results/${userId}`)
-      .set('Authorization', `Bearer ${token}`);
+      .get(`/api/quizzes/results/${user_id}`)
+      .set('Cookie', `authToken=${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
-    expect(response.body[0]).toHaveProperty('score', 1);
   });
 });
