@@ -14,12 +14,12 @@ describe('API Endpoints', () => {
     // Register a user
     await request(app)
       .post('/api/users/register')
-      .send({ user_name: 'testuser', user_email: 'testuser@example.com', password: 'password' });
+      .send({ user_name: 'testuser', user_email: 'testuser@example.com', password_hash: 'password' });
 
     // Login the user to get a token
     const loginResponse = await request(app)
       .post('/api/users/login')
-      .send({ user_email: 'testuser@example.com', password: 'password' });
+      .send({ user_email: 'testuser@example.com', password_hash: 'password' });
 
     token = loginResponse.body.token;
     userId = loginResponse.body.userId;
