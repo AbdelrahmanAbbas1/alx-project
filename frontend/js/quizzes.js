@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         quizItem.innerHTML = `
             <h3>${quiz.title}</h3>
             <p>${quiz.description}</p>
-            <button onclick="window.location.href='quiz.html?quizId=${quiz.quiz_id}'">Take Quiz</button>
+            <button onclick="window.location.href='quiz.html?quiz_id=${quiz.quiz_id}'">Take Quiz</button>
         `;
         quizzesList.appendChild(quizItem);
     });

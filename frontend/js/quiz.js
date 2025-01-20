@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const quizId = urlParams.get('quizId');
+    const quiz_id = urlParams.get('quiz_id');
 
-    const response = await fetch(`/api/quizzes/${quizId}`);
+    const response = await fetch(`/api/quizzes/${quiz_id}`);
     const data = await response.json();
 
     document.getElementById('quizTitle').innerText = data.quiz.title;
@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
         const responses = [];
         data.questions.forEach(question => {
-            const selectedOption = document.querySelector(`input[name="question${question.question_id}"]:checked`);
-            if (selectedOption) {
+            const selected_option = document.querySelector(`input[name="question${question.question_id}"]:checked`);
+            if (selected_option) {
                 responses.push({
-                    questionId: question.question_id,
-                    selectedOption: parseInt(selectedOption.value)
+                    question_id: question.question_id,
+                    selected_option: parseInt(selected_option.value)
                 });
             }
         });
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ userId: 1, quizId, responses }) // Replace userId with the actual user ID
+            body: JSON.stringify({ user_id: 1, quiz_id, responses }) // Replace user_id with the actual user ID
         });
 
         const result = await response.json();
