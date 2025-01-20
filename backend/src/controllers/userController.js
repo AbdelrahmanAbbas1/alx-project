@@ -62,6 +62,7 @@ exports.loginUser = async (req, res) => {
     }
 
     const user = rows[0];
+    const user_id = user.user_id; 
     const isPasswordCorrect = await bcrypt.compare(password_hash, user.password_hash);
 
     // Verifying the password
@@ -82,7 +83,7 @@ exports.loginUser = async (req, res) => {
       maxAge: 3600000
     });
 
-    res.status(200).json({ message: "Login Successful", token: token });
+    res.status(200).json({ message: "Login Successful", user_id: user_id, token: token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Database error" });
