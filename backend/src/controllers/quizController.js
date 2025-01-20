@@ -6,9 +6,15 @@ dotenv.config();
 
 exports.createQuiz = async (req, res) => {
   const { title, description, questions, created_by } = req.body;
-
+  
   if (!title || !description || !questions || !Array.isArray(questions) || !created_by) {
     return res.status(401).json({ message: "All fields are required" });
+  }
+
+  // Check if quiz already exists
+  const existingQuiz = await pool.query('SELECT * FROM quizzes WHERE title = ?', [title]);
+  if (existingQuiz.length > 0) {
+    return res.status(409).json({ message: "Quiz already exists" });
   }
 
   try {
