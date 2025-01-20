@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './.env' });
+dotenv.config({ path: '../.env' });
 
 console.log('Environment Variables:', {
   DB_HOST: process.env.DB_HOST,
