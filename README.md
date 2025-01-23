@@ -14,8 +14,8 @@ A web application for creating and taking quizzes.
 1. **Clone the repository:**
 
    ```sh
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/AbdelrahmanAbbas1/quiz_wep_app.git
+   cd quiz_wep_app
    ```
 
 2. **Install dependencies:**
