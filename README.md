@@ -208,6 +208,7 @@ These packages are already listed in the `package.json` file and will be install
   {
     "title": "string",
     "description": "string",
+    "created_by": "number",
     "questions": [
       {
         "question_text": "string",
