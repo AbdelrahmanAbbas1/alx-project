@@ -19,10 +19,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 
-// app.get('/', (req, res) => {
-//   res.send('API is working');
-// });
-
 // Users route
 app.use('/api/users', userRouter);
 
