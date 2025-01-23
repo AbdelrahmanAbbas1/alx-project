@@ -103,7 +103,7 @@ exports.submitQuizResponses = async (req, res) => {
     }
 
     await pool.query('INSERT INTO results (score, user_id, quiz_id) VALUES (?, ?, ?)', [score, user_id, quiz_id]);
-    res.status(201).json({ message: "Quiz submitted successfully", score });
+    res.status(201).json({ message: "Quiz submitted successfully", user_id, score });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to submit quiz responses" });

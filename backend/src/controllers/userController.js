@@ -95,7 +95,7 @@ exports.loginUser = async (req, res) => {
 exports.allUsers = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      'SELECT * FROM users'
+      'SELECT user_id, user_name, user_email, created_at FROM users'
     );
     res.status(200).json({ message: "Data received", users: rows });
   } catch (err) {
@@ -111,5 +111,5 @@ exports.logoutUser = async (req, res) => {
     sameSite: "strict",
     secure: process.env.NODE_ENV === "Production",
   });
-  res.status(200).json({ message: "logut successful" });
+  res.status(200).json({ message: "Logout Successfully" });
 };
