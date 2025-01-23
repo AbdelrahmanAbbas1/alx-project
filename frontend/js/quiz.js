@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Cookie': `authToken=${token}`
             },
             body: JSON.stringify({ user_id: 1, quiz_id, responses }) // Replace user_id with the actual user ID
         });

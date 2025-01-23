@@ -1,3 +1,5 @@
+import jwtDecode from 'jwt-decode';
+
 let questionCount = 1;
 
 function addQuestion() {
@@ -42,14 +44,17 @@ document.getElementById('createQuizForm').addEventListener('submit', async (e) =
         questions.push({ question_text, options, correct_option });
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
+    const decodedToken = jwtDecode(token);
+    const user_id = decodedToken.user_id; // Extract the user ID from the decoded token
+
     const response = await fetch('/api/quizzes/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Cookie': `authToken=${token}` // Use Authorization header for token
         },
-        body: JSON.stringify({ title, description, questions, created_by: 1 }) // Replace created_by with the actual user ID
+        body: JSON.stringify({ title, description, questions, created_by: user_id })
     });
 
     const result = await response.json();

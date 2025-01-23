@@ -19,8 +19,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, '..', 'frontend')));
-
 app.get('/', (req, res) => {
   res.send('API is working');
 });

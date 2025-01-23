@@ -11,7 +11,7 @@
         <h1>Create a New Quiz</h1>
     </header>
 
-    <section class="main-content">
+    <section>
         <form id="createQuizForm">
             <label for="title">Quiz Title:</label>
             <input type="text" id="title" name="title" required>
@@ -43,6 +43,8 @@
         <p>&copy; 2025 Quiz Web App</p>
     </footer>
 
-    <script src="js/createQuiz.js"></script>
+    <!-- Include jwt-decode library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script type="module "src="js/createQuiz.js"></script>
 </body>
 </html>

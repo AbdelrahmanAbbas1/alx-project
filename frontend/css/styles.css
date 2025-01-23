@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
+  padding-bottom: 60px;
 }
 
 header {
@@ -14,7 +15,7 @@ header {
 }
 
 footer {
-  background-color: #4CAF50;
+  background-color: #4CAF50; /* Grey background with transparency */
   color: white;
   text-align: center;
   padding: 10px;
@@ -61,6 +62,7 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  z-index: 3;
 }
 
 button:hover {

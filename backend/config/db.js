@@ -1,7 +1,10 @@
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+
+const envPath = path.resolve(__dirname, '../../.env');
+dotenv.config({ path: envPath });
 
 console.log('Database Connection Details:', {
   host: process.env.DB_HOST,
