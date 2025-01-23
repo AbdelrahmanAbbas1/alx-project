@@ -177,7 +177,7 @@ These packages are already listed in the `package.json` file and will be install
   }
   ```
   #### Logout a user
-- **URL:** `/api/users/login`
+- **URL:** `/api/users/logout`
 - **Method:** `POST`
 - **Headers:**
   ```json
