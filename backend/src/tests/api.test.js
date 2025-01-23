@@ -21,17 +21,14 @@ describe('API Endpoints', () => {
       .post('/api/users/login')
       .send({ user_email: 'testuser@example.com', password_hash: 'password' });
 
-    console.log(loginResponse.body); // dubugging
     token = loginResponse.body.token;
     user_id = loginResponse.body.user_id;
-    console.log("user_id: ", user_id); // debugging
   });
 
   afterAll(async () => {
     // Close the database connection pool
     try {
       // Clean up the specific entries created during the test
-      console.log(quiz_id); // debugging
       if (quiz_id) {
         await pool.query('DELETE FROM results WHERE quiz_id = ?', [quiz_id]);
         await pool.query('DELETE FROM questions WHERE quiz_id = ?', [quiz_id]);
@@ -63,10 +60,7 @@ describe('API Endpoints', () => {
           }
         ]
       });
-      console.log("user_id: ", user_id); // debugging
-      console.log("TOKEN: ", token); // debugging
-      console.log(response.body);
-      console.log(response.body.quiz_id);
+
       if (response.body.message === "Quiz already exists") {
         quiz_id = response.body.quiz_id;
       }
@@ -82,7 +76,6 @@ describe('API Endpoints', () => {
   });
 
   it('should get a quiz by ID', async () => {
-    console.log("quiz_id: ", quiz_id);
     const response = await request(app).get(`/api/quizzes/${quiz_id}`);
     expect(response.status).toBe(200);
     expect(response.body.quiz).toHaveProperty('title', 'Test Quiz');

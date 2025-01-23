@@ -14,7 +14,6 @@ exports.createQuiz = async (req, res) => {
   // Check if quiz already exists
   const [existingQuiz] = await pool.query('SELECT * FROM quizzes WHERE title = ?', [title]);
   if (existingQuiz.length > 0) {
-    console.log(existingQuiz[0].quiz_id);
     return res.status(409).json({ message: "Quiz already exists", quiz_id: existingQuiz[0].quiz_id });
   }
 
@@ -74,9 +73,7 @@ exports.getAllQuizzes = async (req, res) => {
 exports.getQuizById = async (req, res) => {
   const { quiz_id } = req.params;
   try {
-    console.log("Quiz ID IN CONTROLLER: ", quiz_id);
     const [quiz] = await pool.query('SELECT * FROM quizzes WHERE quiz_id = ?', [quiz_id]);
-    console.log(quiz);
     if (quiz.length === 0) {
       return res.status(404).json({ message: "Quiz not found" });
     }
