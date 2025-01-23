@@ -111,6 +111,179 @@ The following packages are required for this project:
 
 These packages are already listed in the `package.json` file and will be installed when you run `npm install`.
 
+## API Documentation
+
+### User Endpoints
+
+#### Register a new user
+- **URL:** `/api/users/register`
+- **Method:** `POST`
+- **Body:**
+  ```json
+  {
+    "username": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "User registered successfully",
+    "user": {
+      "id": "number",
+      "username": "string",
+      "email": "string"
+    }
+  }
+  ```
+
+#### Login a user
+- **URL:** `/api/users/login`
+- **Method:** `POST`
+- **Body:**
+  ```json
+  {
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "User logged in successfully",
+    "token": "string"
+  }
+  ```
+
+### Quiz Endpoints
+
+#### Create a new quiz
+- **URL:** `/api/quizzes/create`
+- **Method:** `POST`
+- **Headers:**
+  ```json
+  {
+    "Cookie": "authToken=<token>"
+  }
+  ```
+- **Body:**
+  ```json
+  {
+    "title": "string",
+    "description": "string",
+    "questions": [
+      {
+        "question": "string",
+        "options": ["string", "string", "string", "string"],
+        "answer": "string"
+      }
+    ]
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "Quiz created successfully",
+    "quiz": {
+      "id": "number",
+      "title": "string",
+      "description": "string",
+      "questions": [
+        {
+          "id": "number",
+          "question": "string",
+          "options": ["string", "string", "string", "string"],
+          "answer": "string"
+        }
+      ]
+    }
+  }
+  ```
+
+#### Get all quizzes
+- **URL:** `/api/quizzes`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  [
+    {
+      "id": "number",
+      "title": "string",
+      "description": "string"
+    }
+  ]
+  ```
+
+#### Get a quiz by ID
+- **URL:** `/api/quizzes/:quiz_id`
+- **Method:** `GET`
+- **Response:**
+  ```json
+  {
+    "id": "number",
+    "title": "string",
+    "description": "string",
+    "questions": [
+      {
+        "id": "number",
+        "question": "string",
+        "options": ["string", "string", "string", "string"],
+        "answer": "string"
+      }
+    ]
+  }
+  ```
+
+#### Submit quiz responses
+- **URL:** `/api/quizzes/submit`
+- **Method:** `POST`
+- **Headers:**
+  ```json
+  {
+    "Cookie": "authToken=<token>"
+  }
+  ```
+- **Body:**
+  ```json
+  {
+    "quiz_id": "number",
+    "responses": [
+      {
+        "question_id": "number",
+        "answer": "string"
+      }
+    ]
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "Quiz submitted successfully",
+    "score": "number"
+  }
+  ```
+
+#### Get user results
+- **URL:** `/api/quizzes/results/:user_id`
+- **Method:** `GET`
+- **Headers:**
+  ```json
+  {
+    "Cookie": "authToken=<token>"
+  }
+  ```
+- **Response:**
+  ```json
+  [
+    {
+      "quiz_id": "number",
+      "score": "number",
+      "date": "string"
+    }
+  ]
+  ```
+
 ### Contributing
 
 1. Fork the repository
@@ -118,3 +291,4 @@ These packages are already listed in the `package.json` file and will be install
 3. Commit your changes (`git commit -am 'Add new feature'`)
 4. Push to the branch (`git push origin feature-branch`)
 5. Create a new Pull Request
+
