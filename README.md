@@ -121,20 +121,16 @@ These packages are already listed in the `package.json` file and will be install
 - **Body:**
   ```json
   {
-    "username": "string",
-    "email": "string",
-    "password": "string"
+    "user_name": "string",
+    "user_email": "string",
+    "password_hash": "string"
   }
   ```
 - **Response:**
   ```json
   {
     "message": "User registered successfully",
-    "user": {
-      "id": "number",
-      "username": "string",
-      "email": "string"
-    }
+    "user_id": "number"
   }
   ```
 
@@ -144,15 +140,55 @@ These packages are already listed in the `package.json` file and will be install
 - **Body:**
   ```json
   {
-    "email": "string",
-    "password": "string"
+    "user_email": "string",
+    "password_hash": "string"
   }
   ```
 - **Response:**
   ```json
   {
     "message": "User logged in successfully",
+    "user_id": "number",
     "token": "string"
+  }
+  ```
+
+#### Get all users
+- **URL:** `/api/users/all`
+- **Method:** `GET`
+- **Headers:**
+ ```json
+  {
+    "Cookie": "authToken=<token>"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "Data received",
+    "users": [
+      {
+        "user_id": "number",
+        "user_name": "stirng",
+        "user_email": "stirng",
+        "created_at": "date"
+      }
+    ]
+  }
+  ```
+  #### Logout a user
+- **URL:** `/api/users/login`
+- **Method:** `POST`
+- **Headers:**
+  ```json
+  {
+    "Cookie": "authToken=<token>"
+  }
+  ```
+- **Response:**
+  ```json
+  {
+    "message": "Logout Successfully"
   }
   ```
 
@@ -174,9 +210,9 @@ These packages are already listed in the `package.json` file and will be install
     "description": "string",
     "questions": [
       {
-        "question": "string",
+        "question_text": "string",
         "options": ["string", "string", "string", "string"],
-        "answer": "string"
+        "correct_option": "string"
       }
     ]
   }
@@ -185,19 +221,7 @@ These packages are already listed in the `package.json` file and will be install
   ```json
   {
     "message": "Quiz created successfully",
-    "quiz": {
-      "id": "number",
-      "title": "string",
-      "description": "string",
-      "questions": [
-        {
-          "id": "number",
-          "question": "string",
-          "options": ["string", "string", "string", "string"],
-          "answer": "string"
-        }
-      ]
-    }
+    "quiz_id": "number"
   }
   ```
 
@@ -208,9 +232,11 @@ These packages are already listed in the `package.json` file and will be install
   ```json
   [
     {
-      "id": "number",
+      "quiz_id": "number",
       "title": "string",
-      "description": "string"
+      "description": "string",
+      "created_at": "date",
+      "created_by": "number"
     }
   ]
   ```
@@ -221,16 +247,25 @@ These packages are already listed in the `package.json` file and will be install
 - **Response:**
   ```json
   {
-    "id": "number",
-    "title": "string",
-    "description": "string",
-    "questions": [
-      {
-        "id": "number",
-        "question": "string",
-        "options": ["string", "string", "string", "string"],
-        "answer": "string"
-      }
+    "quiz": {
+      "quiz_id": "number",
+      "title": "string",
+      "description": "string",
+      "created_at": "date",
+      "created_by": "number"
+    },
+      "questions": [
+        {
+        "question_id": "number",
+        "question_text": "string",
+        "option_1": "string",
+        "option_2": "string",
+        "option_3": "string",
+        "option_4": "string",
+       "correct_option": "number",
+        "created_at": "date",
+        "quiz_id": "number"
+        }
     ]
   }
   ```
@@ -247,11 +282,12 @@ These packages are already listed in the `package.json` file and will be install
 - **Body:**
   ```json
   {
+    "user_id": "number",
     "quiz_id": "number",
     "responses": [
       {
         "question_id": "number",
-        "answer": "string"
+        "selected_option": "number"
       }
     ]
   }
@@ -260,6 +296,7 @@ These packages are already listed in the `package.json` file and will be install
   ```json
   {
     "message": "Quiz submitted successfully",
+    "user_id": "number",
     "score": "number"
   }
   ```
@@ -277,9 +314,11 @@ These packages are already listed in the `package.json` file and will be install
   ```json
   [
     {
-      "quiz_id": "number",
+      "result_id": "number",
       "score": "number",
-      "date": "string"
+      "taken_at": "date",
+      "user_id": "number",
+      "quiz_id": "number"
     }
   ]
   ```
